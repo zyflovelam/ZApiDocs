@@ -322,3 +322,9 @@ public class XXXApplication{
 
 访问地址：`${ip}:${port}/z-docs`
 
+
+
+---
+
+![Alt text](images/ex.jpg)
+
