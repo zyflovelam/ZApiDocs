@@ -44,7 +44,7 @@ public @interface ZApiParam {
      *
      * @return
      */
-    boolean required() default false;
+    boolean required() default true;
 
     /**
      * 参数来源类型

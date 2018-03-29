@@ -37,6 +37,9 @@
             <div class="nav-wrapper" style="background: #2ca9eb;z-index: 2">
                 &nbsp;&nbsp;<a class="brand-logo" th:text="${apiInfo.title}"></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="#">BaseUrl:<span th:text="${apiInfo.baseUrl}"></span></a></li>
+                    <li><a href="#">Author:<span th:text="${apiInfo.author}"></span></a></li>
+                    <li><a href="#">Version:<span th:text="${apiInfo.version}"></span></a></li>
                     <li><a href="#">ZApiDocs</a></li>
                 </ul>
             </div>

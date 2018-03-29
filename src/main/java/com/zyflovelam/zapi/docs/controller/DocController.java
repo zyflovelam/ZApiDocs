@@ -5,6 +5,7 @@ import com.zyflovelam.zapi.docs.config.ZApiConfig;
 import com.zyflovelam.zapi.docs.entity.po.ApiInfo;
 import com.zyflovelam.zapi.docs.entity.vo.ApiEntityVo;
 import com.zyflovelam.zapi.docs.entity.vo.ApiVo;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,8 @@ import java.util.List;
 @Controller
 public class DocController {
 
+    private Logger logger = Logger.getLogger(this.getClass());
+
     @Autowired
     private ZApiConfig zApiConfig;
 
@@ -37,10 +40,9 @@ public class DocController {
         modelAndView.addObject("apiList", string);
         String list = JSONObject.toJSONString(apiEntityList);
         modelAndView.addObject("apiEntityList", list);
-        System.out.println("获取的API列表");
-        System.out.println(string);
-        System.out.println("获取的实体类");
-        System.out.println(list);
+        logger.info("进入到z-docs");
+        logger.info("视图信息：");
+        logger.info(JSONObject.toJSONString(modelAndView));
 
         return modelAndView;
     }

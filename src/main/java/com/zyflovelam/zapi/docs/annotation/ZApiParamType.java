@@ -9,5 +9,12 @@ package com.zyflovelam.zapi.docs.annotation;
  * @author by zyflovelam
  */
 public enum ZApiParamType {
+    /**
+     * Header
+     * Body
+     * Query
+     * Path
+     * Form
+     */
     HEADER, BODY, QUERY, PATH, FORM
 }
