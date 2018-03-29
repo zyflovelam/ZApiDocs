@@ -328,3 +328,8 @@ public class XXXApplication{
 
 ![Alt text](images/ex.jpg)
 
+
+
+---
+
+*PS：本人才疏学浅，也是一直在学习中，难免有什么错误，bug啥的，希望大家能够多提提建议和意见，谢谢。以后会继续学习补充更多功能，这里也感谢JApiDocs作者，给了我灵感，感谢*
