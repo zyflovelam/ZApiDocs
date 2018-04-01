@@ -84,7 +84,7 @@ public class ZApiConfig {
                         baseUrls = controllerRequestMapping.value();
                     }
                     ZApi zApi = clazz.getAnnotation(ZApi.class);
-                    String name = zApi.name();
+                    String name = zApi.value();
                     if ("".equals(name)) {
                         name = clazz.getName();
                     }
@@ -101,7 +101,7 @@ public class ZApiConfig {
                         if (hasZApiMethod) {
                             ApiVo.ApiMethodVo apiMethodVo = new ApiVo.ApiMethodVo();
                             ZApiMethod zApiMethod = method.getAnnotation(ZApiMethod.class);
-                            String zApiMethodName = zApiMethod.name();
+                            String zApiMethodName = zApiMethod.value();
                             if ("".equals(zApiMethodName)) {
                                 zApiMethodName = method.getName();
                             }
@@ -158,7 +158,7 @@ public class ZApiConfig {
                                     //需要描述的参数
                                     ZApiParam zApiParam = parameter.getAnnotation(ZApiParam.class);
                                     ApiVo.ApiParamVo apiParamVo = new ApiVo.ApiParamVo();
-                                    String zApiParamName = zApiParam.name();
+                                    String zApiParamName = zApiParam.value();
                                     if ("".equals(zApiParamName)) {
                                         zApiParamName = ParameterNameUtil.getParameterName(clazz, method, j);
                                     }
@@ -302,6 +302,18 @@ public class ZApiConfig {
         this.apiEntityList = apiEntityList;
         this.apiList = apiList;
     }
+
+//    public ZApiConfig(String basePack,ApiInfo apiInfo,String version){
+//        logger.info("开始建立API");
+//        this.apiInfo = apiInfo;
+//        this.basePack = basePack;
+//        Set<Class<?>> classes = PackageUtil.getClazzFromPackage(basePack);
+//        List<ApiVo> apiList = new ArrayList<>();
+//        List<ApiEntityVo> apiEntityList = new ArrayList<>();
+//        for (Class<?> clazz : classes) {
+//
+//        }
+//    }
 
 
     public String getBasePack() {

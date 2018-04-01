@@ -22,7 +22,7 @@ public @interface ZApiMethod {
      *
      * @return
      */
-    String name() default "";
+    String value() default "";
 
     /**
      * 接口详细功能描述

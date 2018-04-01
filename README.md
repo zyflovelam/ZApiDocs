@@ -18,10 +18,6 @@
 
 `zApiDocs/jar/z-api-docs-1.0.jar`
 
-### Maven
-
-*审核中，审核完成上传后就可以用了*
-
 ### 注解
 
 > ZApiDocs中有如下一些注解，我将一一说明作用

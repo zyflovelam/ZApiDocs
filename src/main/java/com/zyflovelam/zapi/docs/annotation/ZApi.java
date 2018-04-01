@@ -23,7 +23,7 @@ public @interface ZApi {
      *
      * @return
      */
-    String name() default "";
+    String value() default "";
 
     /**
      * 此类的详细信息

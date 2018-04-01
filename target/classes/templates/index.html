@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${apiInfo.title}"></title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/materialize.min.css" media="screen,projection"/>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/materialize.min.js"></script>
+    <script src="/js/zApiDocs.js"></script>
+    <style>
+        #main {
+            width: 100%;
+            min-height: 500px;
+        }
+
+        fieldset {
+            border-bottom: none;
+            border-left: none;
+            border-right: none;
+        }
+
+        fieldset legend {
+            display: block;
+            padding: 0 10px;
+            margin-bottom: 2rem;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="row" style="margin-bottom: 0">
+    <div class="col s12" style="padding: 0;">
+        <nav>
+            <div class="nav-wrapper" style="background: #2ca9eb;z-index: 2">
+                &nbsp;&nbsp;<a class="brand-logo" th:text="${apiInfo.title}"></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="#">BaseUrl:<span th:text="${apiInfo.baseUrl}"></span></a></li>
+                    <li><a href="#">Author:<span th:text="${apiInfo.author}"></span></a></li>
+                    <li><a href="#">Version:<span th:text="${apiInfo.version}"></span></a></li>
+                    <li><a href="#">ZApiDocs</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col s3" style="padding: 0">
+        <ul id="controllers" class="collapsible"
+            style="transform: translateX(0%);">
+        </ul>
+    </div>
+    <div class="col s9">
+        <main>
+            <div id="main">
+                <div class="card" style="padding: 1rem 0.75rem;">
+                    <!--Api name and description-->
+                    <div class="row">
+                        <div class="col s12 card-title">
+                            <span>
+                                接口名称：
+                            </span>
+                            <span id="apiMethodName" style="font-weight: bold">
+                            </span>
+                        </div>
+                    </div>
+                    <!--Api information-->
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="collection">
+                                <a class="collection-item">
+                                    <div class="row" style="margin-bottom: 0">
+                                        <div class="col s2">
+                                            <p>Request Method:</p>
+                                        </div>
+                                        <div class="col s10" id="apiMethodMethods">
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="collection-item">
+                                    <div class="row" style="margin-bottom: 0">
+                                        <div class="col s2">
+                                            <p>Request Url:</p>
+                                        </div>
+                                        <div class="col s10" id="apiMethodUrls">
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="collection-item">
+                                    <div class="row" style="margin-bottom: 0">
+                                        <div class="col s2">Description:</div>
+                                        <div class="col s10">
+                                            <blockquote id="apiMethodDescription">
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <fieldset>
+                        <legend>Parameters</legend>
+                        <div class="row">
+                            <div class="col s12">
+                                <table class="highlight centered responsive-table">
+                                    <thead>
+                                    <tr>
+                                        <th>参数名称</th>
+                                        <th>参数类型</th>
+                                        <th>是否必须</th>
+                                        <th>置于</th>
+                                        <th>描述</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="apiMethodParams">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Response</legend>
+                        <div class="row">
+                            <div class="col s12">
+                                <strong>Response Headers</strong>
+                                <table class="highlight centered responsive-table">
+                                    <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th>值</th>
+                                        <th>描述</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="apiMethodResponseHeaders">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <strong>Response Body</strong>
+                                <table class="highlight centered responsive-table">
+                                    <thead>
+                                    <tr>
+                                        <th>状态码</th>
+                                        <th>消息</th>
+                                        <th>返回体类型</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="apiMethodResponseBodies">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!--类未配置提示-->
+<div id="noClass" class="modal modal-fixed-footer" style="height: 200px">
+    <div class="modal-content">
+        <h5>当前类未在ZApiDoc中配置</h5>
+        <div style="width: 100%;height: auto;text-align: center;color: #2CA9EB;">
+            <strong>类名：</strong>&nbsp;<span style="font-size: 1.6rem;" id="noClassName"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" class="modal-action modal-close waves-effect waves-green btn-flat ">知道啦</a>
+    </div>
+</div>
+
+<!--类信息-->
+<div id="classInformation" class="modal modal-fixed-footer" style="width: 75vw;min-height: 80vh">
+    <div class="modal-content">
+        <h5 id="classInformationClassName" style="color: #2CA9EB;"></h5>
+        <div class="row">
+            <div class="col s12">
+                <div class="collection">
+                    <a class="collection-item">
+                        <div class="row" style="margin-bottom: 0">
+                            <div class="col s2">
+                                类信息:
+                            </div>
+                            <div class="col s10" id="classInformationName">
+                            </div>
+                        </div>
+                    </a>
+                    <a class="collection-item">
+                        <div class="row" style="margin-bottom: 0">
+                            <div class="col s2">
+                                描述:
+                            </div>
+                            <div class="col s10">
+                                <blockquote id="classInformationDescription"></blockquote>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="collection-item">
+                        <div class="row" style="margin-bottom: 0">
+                            <div class="col s2">作者:</div>
+                            <div class="col s10" id="classInformationAuthor">
+                            </div>
+                        </div>
+                    </a>
+                    <a class="collection-item">
+                        <div class="row" style="margin-bottom: 0">
+                            <div class="col s2">版本:</div>
+                            <div class="col s10" id="classInformationVersion">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <fieldset>
+                    <legend>Fields</legend>
+                </fieldset>
+                <table class="highlight centered responsive-table">
+                    <thead>
+                    <tr>
+                        <th>字段</th>
+                        <th>类型</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+                    <tbody id="classInformationClassFields">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" class="modal-action modal-close waves-effect waves-green btn-flat ">知道啦</a>
+    </div>
+</div>
+
+</body>
+<script th:inline="javascript">
+    apiList = JSON.parse([[${apiList}]]);
+    apiEntities = JSON.parse([[${apiEntityList}]]);
+    initApiDocs();
+</script>
+<script>
+    $(document).ready(function () {
+        $('.modal').modal();
+    });
+</script>
+</html>

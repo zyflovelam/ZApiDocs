@@ -21,7 +21,9 @@ public @interface ZApiResponses {
      *
      * @return
      */
-    ZApiResponse[] zApiResponses();
+    ZApiResponse[] zApiResponses() default {
+            @ZApiResponse
+    };
 
     /**
      * 返回头
