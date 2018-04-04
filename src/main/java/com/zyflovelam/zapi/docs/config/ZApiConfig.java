@@ -1,19 +1,17 @@
 package com.zyflovelam.zapi.docs.config;
 
+import com.zyflovelam.zapi.docs.annotation.*;
 import com.zyflovelam.zapi.docs.entity.po.ApiInfo;
 import com.zyflovelam.zapi.docs.entity.vo.ApiEntityVo;
 import com.zyflovelam.zapi.docs.entity.vo.ApiVo;
 import com.zyflovelam.zapi.docs.utils.DataTypeUtil;
 import com.zyflovelam.zapi.docs.utils.PackageUtil;
 import com.zyflovelam.zapi.docs.utils.ParameterNameUtil;
-import com.zyflovelam.zapi.docs.annotation.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -257,10 +255,28 @@ public class ZApiConfig {
                             ZApiEntityField zApiEntityField = field.getAnnotation(ZApiEntityField.class);
                             ApiEntityVo.ApiEntityFieldVo apiEntityFieldVo = new ApiEntityVo.ApiEntityFieldVo();
                             apiEntityFieldVo.setName(field.getName());
-                            apiEntityFieldVo.setFieldType(field.getType().getName());
+
+                            Class<?> type = field.getType();
+                            String typeName = type.getName();
+                            if (type == java.util.List.class || type == java.util.Set.class) {
+                                Type genericType = field.getGenericType();
+                                if (genericType instanceof ParameterizedType) {
+                                    ParameterizedType pt = (ParameterizedType) genericType;
+                                    //得到泛型里的class类型对象
+                                    type = (Class<?>) pt.getActualTypeArguments()[0];
+                                    typeName = type.getName();
+                                    apiEntityFieldVo.setCollection(true);
+                                    apiEntityFieldVo.setCollectionType(field.getType().getName());
+                                } else {
+                                    apiEntityFieldVo.setCollection(false);
+                                }
+                            } else {
+                                apiEntityFieldVo.setCollection(false);
+                            }
+
+                            apiEntityFieldVo.setFieldType(typeName);
                             apiEntityFieldVo.setDescription(zApiEntityField.value());
                             boolean defined = true;
-                            String typeName = field.getType().getName();
                             for (String excludeClass : excludeClass) {
                                 if (typeName.equals(excludeClass)) {
                                     defined = false;
@@ -281,9 +297,25 @@ public class ZApiConfig {
                         ApiEntityVo.ApiEntityFieldVo apiEntityFieldVo = new ApiEntityVo.ApiEntityFieldVo();
                         apiEntityFieldVo.setName(name);
                         apiEntityFieldVo.setDescription("");
-                        apiEntityFieldVo.setFieldType(field.getType().getName());
+                        Class<?> type = field.getType();
+                        String typeName = type.getName();
+                        if (type == java.util.List.class || type == java.util.Set.class) {
+                            Type genericType = field.getGenericType();
+                            if (genericType instanceof ParameterizedType) {
+                                ParameterizedType pt = (ParameterizedType) genericType;
+                                //得到泛型里的class类型对象
+                                type = (Class<?>) pt.getActualTypeArguments()[0];
+                                typeName = type.getName();
+                                apiEntityFieldVo.setCollection(true);
+                                apiEntityFieldVo.setCollectionType(field.getType().getName());
+                            } else {
+                                apiEntityFieldVo.setCollection(false);
+                            }
+                        } else {
+                            apiEntityFieldVo.setCollection(false);
+                        }
+                        apiEntityFieldVo.setFieldType(typeName);
                         boolean defined = true;
-                        String typeName = field.getType().getName();
                         for (String excludeClass : excludeClass) {
                             if (typeName.equals(excludeClass)) {
                                 defined = false;

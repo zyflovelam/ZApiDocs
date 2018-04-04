@@ -141,9 +141,22 @@ function openClass(className) {
         $(apiEntityFields).each(function (i, e) {
             fieldsHtml +=
                 '<tr>' +
-                '   <td>' + e.name + '</td>' +
-                '   <td>' + (e.defined ? '<a href="javascript:openClass(\'' + e.fieldType + '\')">' + e.fieldType + '</a>' : e.fieldType) + '</td>' +
-                '   <td>' + e.description + '</td>' +
+                '   <td>' + e.name + '</td>';
+            fieldsHtml += '<td>';
+            if (e.defined) {
+                fieldsHtml += '<a href="javascript:openClass(\'' + e.fieldType + '\')">';
+                if (e.collection) {
+                    fieldsHtml += e.collectionType + '&lt; ' + e.fieldType + ' &gt;';
+                } else {
+                    fieldsHtml += e.fieldType;
+                }
+                fieldsHtml +=
+                    '</a>';
+            } else {
+                fieldsHtml += e.fieldType;
+            }
+            fieldsHtml += '</td>';
+            fieldsHtml += '   <td>' + e.description + '</td>' +
                 '</tr>';
         });
         $('#classInformationClassFields').html(fieldsHtml);

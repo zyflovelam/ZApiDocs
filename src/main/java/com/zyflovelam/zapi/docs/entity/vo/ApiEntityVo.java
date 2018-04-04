@@ -67,6 +67,26 @@ public class ApiEntityVo {
         private String fieldType;
         private String description;
         private boolean defined;
+        private boolean collection;
+        private String collectionType;
+
+        public String getCollectionType() {
+            return collectionType;
+        }
+
+        public ApiEntityFieldVo setCollectionType(String collectionType) {
+            this.collectionType = collectionType;
+            return this;
+        }
+
+        public boolean isCollection() {
+            return collection;
+        }
+
+        public ApiEntityFieldVo setCollection(boolean collection) {
+            this.collection = collection;
+            return this;
+        }
 
         public boolean isDefined() {
             return defined;
