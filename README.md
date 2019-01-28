@@ -328,4 +328,4 @@ public class XXXApplication{
 
 ---
 
-*PS：本人才疏学浅，也是一直在学习中，难免有什么错误，bug啥的，希望大家能够多提提建议和意见，谢谢。以后会继续学习补充更多功能，这里也感谢[JApiDocs](https://github.com/YeDaxia/JApiDocs)作者，给了我灵感，感谢*
+*PS：本人才疏学浅，也是一直在学习中，难免有什么错误，bug啥的，希望大家能够多提提建议和意见，谢谢。*
